@@ -122,7 +122,7 @@ Cloud Function will be triggered to
           
       * Copy all files from processing into an archiving bucket.
       
-        ```gsutil mv gs://{landing_bucket}/{target_folder}/_processing/*.format gs://{archive_bucket}/{target_folder}/{day_of_year}/_processed/  ``` 
+          ```gsutil mv gs://{landing_bucket}/{target_folder}/_processing/*.format gs://{archive_bucket}/{target_folder}/{day_of_year}/_processed/  ``` 
 
   
 <br/><br/>
