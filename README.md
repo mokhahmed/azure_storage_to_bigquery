@@ -172,3 +172,19 @@ Dataproc is a managed Spark and Hadoop service that lets you take advantage of o
 ![alt text](https://github.com/mokhahmed/azure_storage_to_bigquery/blob/main/dataproc_template/reference_architecture.png?raw=true)
 
 
+
+
+
+## Quick Summary 
+
+||Storage Transfer Service|Dataproc|
+| :---        |    :----:   |          ---: |
+|Transfer Time | 3 mins for 15GB | 15 mins for 15GB (cluster of: 1 driver, 4 workers) |
+|Cost | No charges incurred  | ~ 20 USD monthly  Cost could be dropped by for dataproc serverless batch jobs |
+|Scheduling |  Scheduled jobs or Triggered by API calls | Scheduled batch jobs or Triggered by API calls |
+|Security | Data encrypted at transit |  Data encrypted at transit and you can apply data masking or encrption at transit|
+|Team Skill  | Fully managed service.  | Managed Hadoop environment. <br/>DataProc serverless is fully managed spark for batch jobs | 
+|Technology | Storage transfer service “ file replication”  | Open source apache spark | 
+|Data Format | No restrictions since it’s a file replication tool  | Limited to Spark supported file formats | 
+
+
