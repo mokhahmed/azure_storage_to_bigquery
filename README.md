@@ -1,2 +1,2 @@
-# azure_storage_to_bigquery
+# Azure Storage to BigQuery
 Data Migration from Azure  storage to Bigquery
