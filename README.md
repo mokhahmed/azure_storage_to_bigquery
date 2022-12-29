@@ -117,18 +117,17 @@ Cloud Function will be triggered to
               
               ```
               
-                JOB_NAME= 
-                REGION_NAME = 
-                VERSION= 
-                JAVASCRIPT_FUNCTION= 
-                PATH_TO_JAVASCRIPT_UDF_FILE = 
-                BIGQUERY_TABLE=
-                PATH_TO_BIGQUERY_SCHEMA_JSON= 
-                PATH_TO_TEXT_DATA= 
-                PATH_TO_TEMP_DIR_ON_GCS= 
+                JOB_NAME= GCS_TEXT_TO_BQ_JOB
+                REGION_NAME = us-central1
+                JAVASCRIPT_FUNCTION= parse_events
+                PATH_TO_JAVASCRIPT_UDF_FILE = gs://path/to/transformer.js
+                BIGQUERY_TABLE= <PROJECT_ID>.<DATASET>.<TABLE_ID>
+                PATH_TO_BIGQUERY_SCHEMA_JSON= gs://path/to/schema.json
+                PATH_TO_TEXT_DATA= gs://path/to/input/files
+                PATH_TO_TEMP_DIR_ON_GCS=gs://path/to/temp_df_bucket
                 
                 gcloud dataflow jobs run JOB_NAME 
-                    --gcs-location gs://dataflow-templates/VERSION/GCS_Text_to_BigQuery 
+                    --gcs-location gs://dataflow-templates/latest/GCS_Text_to_BigQuery 
                     --region REGION_NAME 
                     --parameters 
                 javascriptTextTransformFunctionName=JAVASCRIPT_FUNCTION,
