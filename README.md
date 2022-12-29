@@ -226,8 +226,6 @@ Or run the template script
 
 ## Quick Summary 
 
-Below we campare between option 1 and 2 
-
 ||Storage Transfer Service|Dataproc|
 | :---        |    :----:   |          ---: |
 |Transfer Time | 3 mins for 15GB | 15 mins for 15GB (cluster of: 1 driver, 4 workers) |
