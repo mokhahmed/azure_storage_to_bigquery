@@ -4,7 +4,7 @@ Data Migration from Azure  storage to Bigquery
 
 ## 1. Storage Transfer Service ( STS) 
 Storage Transfer Service enables you to quickly and securely transfer data to, from, and between object and file storage systems, including Google Cloud Storage, Amazon S3, Azure Storage, on-premises data, and more. Depending on your source type, you can easily create and run Google-managed transfers or configure self-hosted transfers that give you full control over network routing and bandwidth usage. It makes it easy to perform large-scale online data transfers to migrate data to GCP, archive cold data to GCS, replicate data for business continuity, or transfer data for analytics and machine learning in the cloud.
-
+![alt text](https://github.com/mokhahmed/azure_storage_to_bigquery/blob/main/storage_transfer_service/reference_architecture.png?raw=true)
 
 ## 2. Dataproc ( Spark Serverless Batch Jobs) 
 
