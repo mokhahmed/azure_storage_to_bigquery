@@ -19,7 +19,7 @@ Store SAS token at  Secret Manger <br />
    ``` gcloud secrets versions add SAS-TOKEN --data-file="/path/to/sas-token.txt" ``` <br />
 
 
-## 1. Storage Transfer Service ( STS) 
+## 1. Storage Transfer Service (STS) 
 Storage Transfer Service enables you to quickly and securely transfer data to, from, and between object and file storage systems, including Google Cloud Storage, Amazon S3, Azure Storage, on-premises data, and more. Depending on your source type, you can easily create and run Google-managed transfers or configure self-hosted transfers that give you full control over network routing and bandwidth usage. It makes it easy to perform large-scale online data transfers to migrate data to GCP, archive cold data to GCS, replicate data for business continuity, or transfer data for analytics and machine learning in the cloud. <br/><br/>
 
 ![alt text](https://github.com/mokhahmed/azure_storage_to_bigquery/blob/main/storage_transfer_service/reference_architecture.png?raw=true)
@@ -176,6 +176,7 @@ Run Azure storage to bigquery dataproc template to read directly from azure and 
 ***Note: in case of delta.io input format you need to provide delta dependencies `delta-core.jar` and upload it to gs://{bucket_jars} for the demo i used dataproc serverless (PySpark) Runtime version 1.0 (Spark 3.2, Java 11, Scala 2.12)  which require delta version 1.1.0 you can check the delta and spark dependencies [here](https://docs.delta.io/latest/releases.html)***
   
 ``` 
+
   TEMPLATE= AZURE_STORAGE_TO_BQ
   AZ_STORAGE_ACCOUNT= <AZURE_STORAGE_ACCOUNT>
   AZ_CONTAINER_NAME= <AZURE_STORAGE_ACCOUNT> 
@@ -203,9 +204,11 @@ Run Azure storage to bigquery dataproc template to read directly from azure and 
       --azure.sas $AZ_SAS_TOKEN
 
 ``` 
-Or run the template scrpit 
+
+Or run the template script
 
 ``` 
+  
   TEMPLATE= AZURE_STORAGE_TO_BQ
   AZ_STORAGE_ACCOUNT= <AZURE_STORAGE_ACCOUNT>
   AZ_CONTAINER_NAME= <AZURE_STORAGE_ACCOUNT> 
@@ -215,7 +218,9 @@ Or run the template scrpit
   WRITE_MODE=append|overwrite
   OUTPUT_TABLE=<PROJECT_ID>.<DATASET_ID>.<TABLE_ID>
   TEMP_BUCKET=<TEMP_BUCKET>
+  
   sh dataproc_template/az_storage_to_bq.py  $TEMPLATE $AZ_STORAGE_ACCOUNT $AZ_CONTAINER_NAME $AZ_INPUT_LOCATION $INPUT_FORMAT $WRITE_MODE $OUTPUT_TABLE $TEMP_BUCKET
+  
  ```
 
 <br/><br/>
