@@ -72,11 +72,11 @@ Storage Transfer Service enables you to quickly and securely transfer data to, f
     ```
 3. Once the STS job is completed it will push a status notification to az-to-gcs-sts-notifications pubsub topic.
 Cloud Function will be triggered to 
-
     * Copy all the files in the landing bucker folder into a temp _processing files directory 
+    
         ```gsutil mv  gs://{landing_bucket}/{target_folder}/*format gs://{landing_bucket}/{target_folder}/_processing/ ``` 
 
-    * At this point there are many options that could be used here based on the use case, customer requirement “ masking data before loading it into BQ”,  file formats “ supported , ELT vs ETL , Batch vs Streaming load and so on. We will list here the main 3 approaches for loading data from GCS into BQ 
+   * At this point there are many options that could be used here based on the use case, customer requirement “ masking data before loading it into BQ”,  file formats “ supported , ELT vs ETL , Batch vs Streaming load and so on. We will list here the main 3 approaches for loading data from GCS into BQ 
         * BigQuery batch load using bq load 
               ``` 
                 bq load 
