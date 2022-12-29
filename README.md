@@ -25,31 +25,51 @@ Storage Transfer Service enables you to quickly and securely transfer data to, f
 ![alt text](https://github.com/mokhahmed/azure_storage_to_bigquery/blob/main/storage_transfer_service/reference_architecture.png?raw=true)
 
 
-1. Create PubSub topic to get a notification when the transfer completed 
+1. Create PubSub topic to get a notification when the transfer completed <br />
     ```gcloud pubsub topics create az-to-gcs-sts-notifications```
 
 
 2. Create Storage Transfer Service Scheduled Jobs
+    
     ```
-    name=az_2_bq_sts_job
-    source=https://{storage_account}.blob.core.windows.net/{source_folder}
-    sink=gs://{landing_bucket}/{target_folder}
-    sas_token_secret= $(gcloud secrets versions access latest --secret=<SAS-TOKEN>)
-    project_id=<PROJECT_ID>
-    notification_topic=projects/$project_id/topics/az-to-gcs-sts-notifications 
-    echo "{\"sasToken\": \"$sas_token_secret\"}" > creds.json 
+      name=az_2_bq_sts_job
+      source=https://{storage_account}.blob.core.windows.net/{source_folder}
+      sink=gs://{landing_bucket}/{target_folder}
+      sas_token= $(gcloud secrets versions access latest --secret=<SAS-TOKEN>)
+      notification_topic=projects/$project_id/topics/az-to-gcs-sts-notifications 
+      
+      echo "{\"sasToken\": \"$sas_token\"}" > creds.json 
 
-    gcloud transfer jobs create $source $sink \
-    --name=$name \
-    --source-creds-file='creds.json' \
-    --overwrite-when='different' \
-    --include-modified-after-relative=1d \
-    --notification-pubsub-topic=$notification_topic \
-    --notification-event-types='failed','aborted','success' \
-    --notification-payload-format='json' \
-    --schedule-repeats-every=1d
+      gcloud transfer jobs create $source $sink \
+      --name=$name \
+      --source-creds-file='creds.json' \
+      --overwrite-when='different' \
+      --include-modified-after-relative=1d \
+      --notification-pubsub-topic=$notification_topic \
+      --notification-event-types='failed','aborted','success' \
+      --notification-payload-format='json' \
+      --schedule-repeats-every=1d
     ```
     
+    or execute the shell script to create the sts job 
+    
+    ```
+      project_id= <PROJECT_ID>
+      name=az_2_bq_sts_job
+      source=https://{storage_account}.blob.core.windows.net/{source_folder}
+      sink=gs://{landing_bucket}/{target_folder}
+      sas_token= $(gcloud secrets versions access latest --secret=<SAS-TOKEN>)
+      notification_topic=az-to-gcs-sts-notifications 
+
+      sh az_storage_to_bq_transfer.sh az_2_bq_sts_job $name $source $sink $sas_token $project_id $notification_topic
+      
+    ```
+    
+    or  trigger cloud build to create the sts job 
+    
+    ```
+    gcloud builds submit --config=cloudbuild.yaml --substitutions=_NAME=name $_SOURCE=$source $_SINK=$sink $_JOB_PROJECT_ID=$project_id $_NOTIFICATION_JOB=$notification_topic
+    ```
 3. Once the STS job is completed it will push a status notification to az-to-gcs-sts-notifications pubsub topic.
 Cloud Function will be triggered to 
 
