@@ -77,7 +77,7 @@ Cloud Function will be triggered to
         ```gsutil mv  gs://{landing_bucket}/{target_folder}/*format gs://{landing_bucket}/{target_folder}/_processing/ ``` 
 
    * At this point there are many options that could be used here based on the use case, customer requirement “ masking data before loading it into BQ”,  file formats “ supported , ELT vs ETL , Batch vs Streaming load and so on. We will list here the main 3 approaches for loading data from GCS into BQ 
-        * BigQuery batch load using (BQ Load)[https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table]
+        * BigQuery batch load using [BQ Load](https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table)
         
               ``` 
                 bq load 
@@ -170,4 +170,5 @@ Cloud Function will be triggered to
 Dataproc is a managed Spark and Hadoop service that lets you take advantage of open source data tools for batch processing, querying, streaming, and machine learning. Dataproc automation helps you create clusters quickly, manage them easily, and save money by turning clusters off when you don't need them. With less time and money spent on administration, you can focus on your jobs and your data. <br/><br/>
 
 ![alt text](https://github.com/mokhahmed/azure_storage_to_bigquery/blob/main/dataproc_template/reference_architecture.png?raw=true)
+
 
