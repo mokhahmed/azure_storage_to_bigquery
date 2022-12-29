@@ -88,8 +88,20 @@ Cloud Function will be triggered to
               ``` 
 
         * BigQuery Client Libraries [Python] 
-        * Dataflow Streaming/Batch template 
-              ```        
+        
+        * Dataflow Streaming/Batch template.
+          for example if the input format is Text/CSV files you can use GCS_Text_to_BigQuery template you can the list of all avaliable dataflow templates
+              ```
+                JOB_NAME= 
+                REGION_NAME = 
+                VERSION= 
+                JAVASCRIPT_FUNCTION= 
+                PATH_TO_JAVASCRIPT_UDF_FILE = 
+                BIGQUERY_TABLE=
+                PATH_TO_BIGQUERY_SCHEMA_JSON= 
+                PATH_TO_TEXT_DATA= 
+                PATH_TO_TEMP_DIR_ON_GCS= 
+                
                 gcloud dataflow jobs run JOB_NAME 
                     --gcs-location gs://dataflow-templates/VERSION/GCS_Text_to_BigQuery 
                     --region REGION_NAME 
@@ -100,9 +112,11 @@ Cloud Function will be triggered to
                 inputFilePattern=PATH_TO_TEXT_DATA,
                 outputTable=BIGQUERY_TABLE,
                 bigQueryLoadingTemporaryDirectory=PATH_TO_TEMP_DIR_ON_GCS
+                
               ```
 
-      * DataProc serverless batch template
+      * DataProc serverless batch template. 
+        
       
           ```
             export GCP_PROJECT=<project_id>
@@ -121,8 +135,7 @@ Cloud Function will be triggered to
           ```
           
       * Copy all files from processing into an archiving bucket.
-      
-          ```gsutil mv gs://{landing_bucket}/{target_folder}/_processing/*.format gs://{archive_bucket}/{target_folder}/{day_of_year}/_processed/  ``` 
+        ```gsutil mv gs://{landing_bucket}/{target_folder}/_processing/*.format  gs://{archive_bucket}/{target_folder}/{day_of_year}/_processed/  ``` 
 
   
 <br/><br/>
