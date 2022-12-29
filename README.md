@@ -89,7 +89,8 @@ Cloud Function will be triggered to
 
         * BigQuery Client Libraries [Python] 
         
-        * Dataflow Streaming/Batch template.<br/> for example if the input format is Text/CSV files you can use GCS_Text_to_BigQuery template you can the list of all avaliable dataflow templates
+        * Dataflow Streaming/Batch template.<br/> for example if the input format is Text/CSV files you can use GCS_Text_to_BigQuery template you can the list of all avaliable dataflow templates 
+              
               ```
               
                 JOB_NAME= 
