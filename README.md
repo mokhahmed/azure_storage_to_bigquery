@@ -87,7 +87,7 @@ Cloud Function will be triggered to
                 ./myschema.json
               ``` 
 
-        * BigQuery Client Libraries [Python] 
+        * BigQuery Client Libraries
         
           ```
             from google.cloud import bigquery
