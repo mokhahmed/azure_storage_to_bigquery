@@ -1,0 +1,16 @@
+steps:
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: "bash"
+    args:
+      - "-c"
+      - |
+        ls -l 
+        ./az_storage_to_bq_transfer.sh $_NAME $_SOURCE $_SINK $$SAS_TOKEN $_JOB_PROJECT_ID $_NOTIFICATION_JOB
+        ...
+
+    secretEnv: ['SAS_TOKEN']
+
+availableSecrets:
+  secretManager:
+    - versionName: projects/$_TOKEN_PROJECT_ID/secrets/SAS_TOKEN/versions/latest
+      env: 'SAS_TOKEN'
