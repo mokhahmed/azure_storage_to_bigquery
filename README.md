@@ -4,19 +4,15 @@ Azure Blob Storage is Microsoft's object storage solution for the cloud. Blob St
 
 
 ## Prerequisites
-* 1. Configure Access by creating or using an existing Microsoft Azure Storage user to access the storage account for your Microsoft Azure Storage Blob container.
+1. Configure Access by creating or using an existing Microsoft Azure Storage user to access the storage account for your Microsoft Azure Storage Blob container.
 
-* 2. Create a shared access signatures (SAS) token at the container level save the sas token which will be used later to access 
-Store SAS token at  Secret Manger 
-  ** a. Enable Secret Manger \n 
+2. Create a shared access signatures (SAS) token at the container level save the sas token which will be used later to access 
+Store SAS token at  Secret Manger <br />
+  1. Enable Secret Manger <br />
   ``` gcloud services enable secretmanager.googleapis.com ``` 
-
-
-  ** b. Create SAS-TOKEN secret \n 
+  2. Create SAS-TOKEN secret <br />
   ``` gcloud secrets create SAS-TOKEN --replication-policy="automatic"``` 
-
-
-  ** c. Store the SAS-TOKEN generated form step 2 \n 
+  3. Store the SAS-TOKEN generated form step 2 <br />
   ``` gcloud secrets versions add SAS-TOKEN --data-file="/path/to/sas-token.txt" ``` 
 
 
