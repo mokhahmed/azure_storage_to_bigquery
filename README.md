@@ -171,11 +171,42 @@ Dataproc is a managed Spark and Hadoop service that lets you take advantage of o
 
 ![alt text](https://github.com/mokhahmed/azure_storage_to_bigquery/blob/main/dataproc_template/reference_architecture.png?raw=true)
 
+Run Azure storage to bigquery dataproc template to read directly from azure and write bigquery you only need to configure sas token that we created from previous step 
 
+** Note: in case of delta.io input format you need to provide delta dependencies `delta-core.jar` for the demo i used dataproc serverless (PySpark) Runtime version 1.0 (Spark 3.2, Java 11, Scala 2.12)  which require delta version 1.1.0 you can check the delta and spark dependencies [here](https://docs.delta.io/latest/releases.html) ** 
+  
+``` 
+  TEMPLATE= AZURE_STORAGE_TO_BQ
+  AZ_STORAGE_ACCOUNT= <AZURE_STORAGE_ACCOUNT>
+  AZ_CONTAINER_NAME= <AZURE_STORAGE_ACCOUNT> 
+  AZ_INPUT_LOCATION= <AZURE_STORAGE_ACCOUNT> 
+  AZ_SAS_TOKEN= $(gcloud secrets versions access latest --secret=<SAS-TOKEN>)
+  INPUT_FORMAT=delta|csv|parquet|orc|avro
+  WRITE_MODE=append|overwrite
+  OUTPUT_TABLE=<PROJECT_ID>.<DATASET_ID>.<TABLE_ID>
+  TEMP_BUCKET=<TEMP_BUCKET>
 
+  gcloud beta dataproc batches submit \
+  --project ma-sabre-sandbox-01 \
+  --region us-central1 pyspark \
+  --batch batch-d1bf19 $TEMPLATE \
+  --version 1.0 \
+  --jars gs://spark-lib/bigquery/spark-3.1-bigquery-0.27.1-preview.jar,gs://{bucket_jars}/delta-core_2.12-1.1.0.jar \
+  --subnet default \
+  --  --input.location $INPUT_LOCATION \
+      --bigquery.input.format $INPUT_FORMAT \
+      --bigquery.temp.bucket.name $TEMP_BUCKET \
+      --bigquery.output.mode $WRITE_MODE \
+      --bigquery.output.table $OUTPUT_TABLE \
+      --azure.storage.account $AZ_STORAGE_ACCOUNT \
+      --azure.container.name $AZ_CONTAINER_NAME \
+      --azure.sas $AZ_SAS_TOKEN
 
+``` 
 
 ## Quick Summary 
+
+Below we campare between option 1 and 2 
 
 ||Storage Transfer Service|Dataproc|
 | :---        |    :----:   |          ---: |
