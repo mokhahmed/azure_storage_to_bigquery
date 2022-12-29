@@ -89,7 +89,30 @@ Cloud Function will be triggered to
 
         * BigQuery Client Libraries [Python] 
         
-        * Dataflow Streaming/Batch template.<br/> for example if the input format is Text/CSV files you can use GCS_Text_to_BigQuery template you can the list of all avaliable dataflow templates 
+          ```
+            from google.cloud import bigquery
+
+            client = bigquery.Client()
+            # table_id = "<PROJECT_ID>.<DATASET_ID>.<TABLE_ID>"
+
+            job_config = bigquery.LoadJobConfig(
+                schema=[
+                    bigquery.SchemaField("name", "STRING"),
+                    ....
+                ],
+                skip_leading_rows=1,
+                source_format=bigquery.SourceFormat.CSV,
+            )
+            uri = "gs://path/to/input/files"
+
+            load_job = client.load_table_from_uri( uri, table_id, job_config=job_config )
+
+            print("Job Status {} .".format(  load_job.result()  )) 
+
+          ```
+        
+        * Dataflow Streaming/Batch template.<br/> 
+              ex. if the input format is Text/CSV files you can use GCS_Text_to_BigQuery. You can the list of all avaliable dataflow templates 
               
               ```
               
@@ -118,7 +141,8 @@ Cloud Function will be triggered to
 
       * DataProc serverless batch template. <br/>
         
-      
+          you can use dataproc batch template to load files from gcs bucket into bigquery
+          
           ```
             export GCP_PROJECT=<project_id>
             export REGION=<region>
