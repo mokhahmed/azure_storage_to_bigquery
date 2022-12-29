@@ -77,7 +77,7 @@ Cloud Function will be triggered to
         ```gsutil mv  gs://{landing_bucket}/{target_folder}/*format gs://{landing_bucket}/{target_folder}/_processing/ ``` 
 
    * At this point there are many options that could be used here based on the use case, customer requirement “ masking data before loading it into BQ”,  file formats “ supported , ELT vs ETL , Batch vs Streaming load and so on. We will list here the main 3 approaches for loading data from GCS into BQ 
-        * BigQuery batch load using bq load 
+        * BigQuery batch load using (BQ Load)[https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table]
         
               ``` 
                 bq load 
@@ -87,8 +87,9 @@ Cloud Function will be triggered to
                 ./myschema.json
               ``` 
 
-        * BigQuery Client Libraries
-        
+        * (BigQuery Client Libraries)[https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table]
+           ex. the below python code could be used to load file into BQ 
+          
           ```
             from google.cloud import bigquery
 
@@ -111,8 +112,8 @@ Cloud Function will be triggered to
 
           ```
         
-        * Dataflow Streaming/Batch template.<br/> 
-              ex. if the input format is Text/CSV files you can use GCS_Text_to_BigQuery. You can the list of all avaliable dataflow templates 
+        * Dataflow Batch template.<br/> 
+              ex. if the input format is Text/CSV files you can use (GCS_Text_to_BigQuery)[(https://github.com/GoogleCloudPlatform/dataproc-templates/tree/e4774330c27bdf26b34871f59e8d04123ed28468/python/dataproc_templates/gcs#gcs-to-bigquery)]. You can find the list of all avaliable dataflow templates (here)[https://cloud.google.com/dataflow/docs/guides/templates/provided-templates]
               
               ```
               
