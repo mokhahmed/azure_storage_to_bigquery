@@ -139,9 +139,9 @@ Cloud Function will be triggered to
                 
               ```
 
-      * [Dataproc serverless batch template.](https://github.com/GoogleCloudPlatform/dataproc-templates/tree/e4774330c27bdf26b34871f59e8d04123ed28468/python/dataproc_templates/gcs#gcs-to-bigquery)<br/>
+      * Dataproc serverless batch template.<br/>
         
-          you can use dataproc batch template to load files from gcs bucket into bigquery
+          you can use dataproc [GCS_TO_BIGQUERY](https://github.com/GoogleCloudPlatform/dataproc-templates/tree/e4774330c27bdf26b34871f59e8d04123ed28468/python/dataproc_templates/gcs#gcs-to-bigquery) batch template to load files from gcs bucket into bigquery
           
           ```
             export GCP_PROJECT=<project_id>
