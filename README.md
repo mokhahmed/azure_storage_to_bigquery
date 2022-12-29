@@ -51,7 +51,7 @@ Storage Transfer Service enables you to quickly and securely transfer data to, f
       --schedule-repeats-every=1d
     ```
     
-    or execute the shell script to create the sts job 
+    Or, execute the shell script to create the sts job 
     
     ```
       project_id= <PROJECT_ID>
@@ -65,10 +65,10 @@ Storage Transfer Service enables you to quickly and securely transfer data to, f
       
     ```
     
-    or  trigger cloud build to create the sts job 
+    Or,  trigger cloud build to create the sts job 
     
     ```
-    gcloud builds submit --config=cloudbuild.yaml --substitutions=_NAME=name $_SOURCE=$source $_SINK=$sink $_JOB_PROJECT_ID=$project_id $_NOTIFICATION_JOB=$notification_topic
+    gcloud builds submit --config=cloudbuild.yaml --substitutions=_NAME=$name, $_SOURCE=$source, $_SINK=$sink, $_JOB_PROJECT_ID=$project_id, $_NOTIFICATION_JOB=$notification_topic
     ```
 3. Once the STS job is completed it will push a status notification to az-to-gcs-sts-notifications pubsub topic.
 Cloud Function will be triggered to 
