@@ -24,6 +24,80 @@ Storage Transfer Service enables you to quickly and securely transfer data to, f
 
 ![alt text](https://github.com/mokhahmed/azure_storage_to_bigquery/blob/main/storage_transfer_service/reference_architecture.png?raw=true)
 
+
+1. Create PubSub topic to get a notification when the transfer completed 
+    ```gcloud pubsub topics create az-to-gcs-sts-notifications```
+
+
+2. Create Storage Transfer Service Scheduled Jobs
+    ```
+    name=az_2_bq_sts_job
+    source=https://{storage_account}.blob.core.windows.net/{source_folder}
+    sink=gs://{landing_bucket}/{target_folder}
+    sas_token_secret= $(gcloud secrets versions access latest --secret=<SAS-TOKEN>)
+    project_id=<PROJECT_ID>
+    notification_topic=projects/$project_id/topics/az-to-gcs-sts-notifications 
+    echo "{\"sasToken\": \"$sas_token_secret\"}" > creds.json 
+
+    gcloud transfer jobs create $source $sink \
+    --name=$name \
+    --source-creds-file='creds.json' \
+    --overwrite-when='different' \
+    --include-modified-after-relative=1d \
+    --notification-pubsub-topic=$notification_topic \
+    --notification-event-types='failed','aborted','success' \
+    --notification-payload-format='json' \
+    --schedule-repeats-every=1d
+    ```
+    
+3. Once the STS job is completed it will push a status notification to az-to-gcs-sts-notifications pubsub topic.
+Cloud Function will be triggered to 
+
+    * Copy all the files in the landing bucker folder into a temp _processing files directory gs://{landing_bucket}/{target_folder}/_processing
+
+    * At this point there are many options that could be used here based on the use case, customer requirement “ masking data before loading it into BQ”,  file formats “ supported , ELT vs ETL , Batch vs Streaming load and so on. We will list here the main 3 approaches for loading data from GCS into BQ 
+        * BigQuery batch load using bq load 
+              ``` bq load \
+              --source_format=CSV \
+              mydataset.mytable \ gs://{landing_bucket}/{target_folder}/_processing/*.csv \
+              ./myschema.json
+              ``` 
+
+        * BigQuery Client Libraries [Python] 
+        * Dataflow Streaming/Batch template 
+              ```        
+              gcloud dataflow jobs run JOB_NAME \
+                  --gcs-location gs://dataflow-templates/VERSION/GCS_Text_to_BigQuery \
+                  --region REGION_NAME \
+                  --parameters \
+              javascriptTextTransformFunctionName=JAVASCRIPT_FUNCTION,\
+              JSONPath=PATH_TO_BIGQUERY_SCHEMA_JSON,\
+              javascriptTextTransformGcsPath=PATH_TO_JAVASCRIPT_UDF_FILE,\
+              inputFilePattern=PATH_TO_TEXT_DATA,\
+              outputTable=BIGQUERY_TABLE,\
+              bigQueryLoadingTemporaryDirectory=PATH_TO_TEMP_DIR_ON_GCS
+              ```
+
+      * DataProc serverless batch template
+          ```
+          export GCP_PROJECT=<project_id>
+          export REGION=<region>
+          export GCS_STAGING_LOCATION=<gcs-staging-bucket-folder> 
+          export JARS="gs://spark-lib/bigquery/spark-bigquery-latest_2.12.jar"
+
+          ./bin/start.sh \
+          -- --template=GCSTOBIGQUERY \
+              --gcs.bigquery.input.format="<json|csv|parquet|avro>" \
+              --gcs.bigquery.input.location="<gs://bucket/path>" \
+              --gcs.bigquery.output.dataset="<dataset>" \
+              --gcs.bigquery.output.table="<table>" \
+              --gcs.bigquery.output.mode=<append|overwrite|ignore|errorifexists>\
+              --gcs.bigquery.temp.bucket.name="<temp-bq-bucket-name>"
+          ```
+
+    * Copy all files from processing into an archiving bucket.
+
+  
 <br/><br/>
 ## 2. Dataproc ( Spark Serverless Batch Jobs) 
 
