@@ -87,7 +87,7 @@ Cloud Function will be triggered to
                 ./myschema.json
               ``` 
 
-        * (BigQuery Client Libraries)[https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table]
+        * [BigQuery Client Libraries](https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table)
            ex. the below python code could be used to load file into BQ 
           
           ```
@@ -113,7 +113,7 @@ Cloud Function will be triggered to
           ```
         
         * Dataflow Batch template.<br/> 
-              ex. if the input format is Text/CSV files you can use (GCS_Text_to_BigQuery)[(https://github.com/GoogleCloudPlatform/dataproc-templates/tree/e4774330c27bdf26b34871f59e8d04123ed28468/python/dataproc_templates/gcs#gcs-to-bigquery)]. You can find the list of all avaliable dataflow templates (here)[https://cloud.google.com/dataflow/docs/guides/templates/provided-templates]
+              ex. if the input format is Text/CSV files you can use [GCS_Text_to_BigQuery](https://github.com/GoogleCloudPlatform/dataproc-templates/tree/e4774330c27bdf26b34871f59e8d04123ed28468/python/dataproc_templates/gcs#gcs-to-bigquery). You can find the list of all avaliable dataflow templates [here](https://cloud.google.com/dataflow/docs/guides/templates/provided-templates)
               
               ```
               
