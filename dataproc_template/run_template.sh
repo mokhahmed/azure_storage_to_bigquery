@@ -16,7 +16,7 @@ gcloud beta dataproc batches submit \
 --region us-central1 pyspark \
 --batch batch-d1bf19 $TEMPLATE \
 --version 1.0 \
---jars gs://spark-lib/bigquery/spark-3.1-bigquery-0.27.1-preview.jar,gs://ma-citibike-code-bkt-d-01/dataproc_code/delta-core_2.12-1.1.0.jar \
+--jars gs://spark-lib/bigquery/spark-3.1-bigquery-0.27.1-preview.jar,gs://{bucket_jars}/delta-core_2.12-1.1.0.jar \
 --subnet default \
 --  --input.location $INPUT_LOCATION \
     --bigquery.input.format $INPUT_FORMAT \
